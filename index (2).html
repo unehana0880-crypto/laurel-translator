@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Laurel Translator · 매장 응대용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F5F0;
+    --bg-card: #FFFFFF;
+    --bg-accent: #EFE8DD;
+    --ink: #2C2419;
+    --ink-soft: #6B6052;
+    --ink-faint: #A89E8E;
+    --line: #E4DCCD;
+    --gold: #B89968;
+    --gold-deep: #8B6F3F;
+    --green-leaf: #5C7A5C;
+    --warning: #C4634A;
+    --shadow: 0 1px 3px rgba(44, 36, 25, 0.06), 0 8px 24px rgba(44, 36, 25, 0.04);
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 0 0 40px;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 28px 20px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .brand-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .brand-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* MAIN CONTAINER */
+  .container {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* LANGUAGE PICKER */
+  .lang-section {
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .lang-btn {
+    aspect-ratio: 1.4;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    padding: 4px;
+  }
+
+  .lang-btn:active { transform: scale(0.96); }
+
+  .lang-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+
+  .lang-btn.active .lang-flag,
+  .lang-btn.active .lang-name { color: var(--bg); }
+
+  .lang-flag {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .lang-name {
+    font-size: 9.5px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .lang-more {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .lang-more select {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* DIRECTION TOGGLE */
+  .direction-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .dir-side {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .dir-side strong {
+    display: block;
+    font-size: 15px;
+    color: var(--ink);
+    margin-top: 2px;
+    font-weight: 700;
+  }
+
+  .dir-swap {
+    width: 38px;
+    height: 38px;
+    background: var(--bg-accent);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--gold-deep);
+    font-size: 16px;
+    transition: transform 0.3s;
+  }
+
+  .dir-swap:active { transform: rotate(180deg); }
+
+  /* INPUT AREA */
+  .input-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .input-textarea {
+    width: 100%;
+    min-height: 90px;
+    border: none;
+    resize: none;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: transparent;
+    outline: none;
+  }
+
+  .input-textarea::placeholder {
+    color: var(--ink-faint);
+  }
+
+  .input-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .tool-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .tool-btn:active { transform: scale(0.97); }
+
+  .tool-btn.primary {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .tool-btn.mic.recording {
+    background: var(--warning);
+    color: white;
+    border-color: var(--warning);
+    animation: pulse 1.4s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .tool-btn.claude {
+    background: var(--bg-accent);
+    color: var(--gold-deep);
+    border-color: var(--gold);
+  }
+
+  .tool-btn .icon { font-size: 14px; }
+
+  /* OUTPUT AREA */
+  .output-card {
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAF6F0 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    min-height: 120px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .output-engine-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    background: var(--bg-accent);
+    padding: 3px 8px;
+    border-radius: 100px;
+  }
+
+  .output-engine-badge.claude {
+    color: var(--gold-deep);
+    background: rgba(184, 153, 104, 0.12);
+  }
+
+  .output-text {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+    padding-right: 60px;
+    word-break: break-word;
+  }
+
+  .output-text.empty {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .output-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .output-toolbar button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .output-toolbar button:active { transform: scale(0.96); }
+
+  /* QUICK PHRASES */
+  .quick-section {
+    margin-top: 20px;
+  }
+
+  .quick-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .quick-tabs::-webkit-scrollbar { display: none; }
+
+  .quick-tab {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .quick-tab.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .quick-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .quick-item {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+
+  .quick-item:active {
+    background: var(--bg-accent);
+    transform: scale(0.99);
+  }
+
+  .quick-item-ko {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .quick-item-sub {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* LOADING */
+  .loading {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .loading span {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .loading span:nth-child(2) { animation-delay: 0.2s; }
+  .loading span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: transform 0.3s;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(44, 36, 25, 0.3);
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+  }
+
+  /* SMALL SCREEN */
+  @media (max-width: 380px) {
+    .lang-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .lang-flag { font-size: 18px; }
+    .lang-name { font-size: 8.5px; }
+    .output-text { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-mark">Laurel Studio</div>
+  <div class="brand-title">Translator</div>
+  <div class="brand-sub">매장 응대용 · in-store translator</div>
+</header>
+
+<div class="container">
+
+  <!-- LANGUAGE PICKER -->
+  <div class="lang-section">
+    <div class="section-label">Language · 대상 언어</div>
+    <div class="lang-grid" id="langGrid"></div>
+    <div class="lang-more">
+      <select id="langExtra">
+        <option value="">+ 다른 언어 선택...</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- DIRECTION -->
+  <div class="direction-bar">
+    <div class="dir-side">
+      From<strong id="dirFrom">한국어</strong>
+    </div>
+    <button class="dir-swap" onclick="swapDirection()" title="방향 전환">⇄</button>
+    <div class="dir-side">
+      To<strong id="dirTo">English</strong>
+    </div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-card">
+    <textarea class="input-textarea" id="inputText" placeholder="여기에 입력하거나 마이크 버튼을 누르세요" oninput="autoTranslate()"></textarea>
+    <div class="input-toolbar">
+      <button class="tool-btn mic" id="micBtn" onclick="toggleMic()">
+        <span class="icon">🎙</span><span id="micLabel">음성</span>
+      </button>
+      <button class="tool-btn" onclick="clearInput()">
+        <span class="icon">✕</span>지우기
+      </button>
+      <button class="tool-btn primary" onclick="translate()">
+        번역
+      </button>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-card">
+    <div class="output-engine-badge" id="engineBadge">GOOGLE</div>
+    <div class="output-text empty" id="outputText">번역 결과가 여기에 표시됩니다</div>
+    <div class="output-toolbar">
+      <button onclick="speak()">🔊 듣기</button>
+      <button onclick="copyOutput()">📋 복사</button>
+      <button class="tool-btn claude" style="flex:1;padding:10px;font-size:11px;" onclick="translateWithClaude()">✦ Claude로 재번역</button>
+    </div>
+  </div>
+
+  <!-- QUICK PHRASES -->
+  <div class="quick-section">
+    <div class="section-label">Quick Phrases · 빠른 문장</div>
+    <div class="quick-tabs" id="quickTabs"></div>
+    <div class="quick-list" id="quickList"></div>
+  </div>
+
+  <div class="footer">
+    LAUREL STUDIO · HONGDAE, SEOUL
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================
+// LANGUAGE CONFIG
+// ============================================
+const LANGS = {
+  // Primary 5 (가장 자주 오는 서구권 + 중화권)
+  en:      { name: 'English',     flag: '🇺🇸', voice: 'en-US', google: 'en',    primary: true, label: 'EN' },
+  'zh-TW': { name: '繁體中文',     flag: '🇹🇼', voice: 'zh-TW', google: 'zh-TW', primary: true, label: '繁' },
+  fr:      { name: 'Français',    flag: '🇫🇷', voice: 'fr-FR', google: 'fr',    primary: true, label: 'FR' },
+  de:      { name: 'Deutsch',     flag: '🇩🇪', voice: 'de-DE', google: 'de',    primary: true, label: 'DE' },
+  es:      { name: 'Español',     flag: '🇪🇸', voice: 'es-ES', google: 'es',    primary: true, label: 'ES' },
+  // Secondary (드롭다운)
+  it:      { name: 'Italiano',    flag: '🇮🇹', voice: 'it-IT', google: 'it',    primary: false, label: 'IT' },
+  sv:      { name: 'Svenska',     flag: '🇸🇪', voice: 'sv-SE', google: 'sv',    primary: false, label: 'SV' },
+  nl:      { name: 'Nederlands',  flag: '🇳🇱', voice: 'nl-NL', google: 'nl',    primary: false, label: 'NL' },
+  pt:      { name: 'Português',   flag: '🇵🇹', voice: 'pt-PT', google: 'pt',    primary: false, label: 'PT' },
+  ru:      { name: 'Русский',     flag: '🇷🇺', voice: 'ru-RU', google: 'ru',    primary: false, label: 'RU' },
+  pl:      { name: 'Polski',      flag: '🇵🇱', voice: 'pl-PL', google: 'pl',    primary: false, label: 'PL' },
+  he:      { name: 'עברית',       flag: '🇮🇱', voice: 'he-IL', google: 'iw',    primary: false, label: 'HE' },
+  vi:      { name: 'Tiếng Việt',  flag: '🇻🇳', voice: 'vi-VN', google: 'vi',    primary: false, label: 'VN' },
+  th:      { name: 'ภาษาไทย',     flag: '🇹🇭', voice: 'th-TH', google: 'th',    primary: false, label: 'TH' },
+  ar:      { name: 'العربية',     flag: '🇸🇦', voice: 'ar-SA', google: 'ar',    primary: false, label: 'AR' },
+  id:      { name: 'Indonesia',   flag: '🇮🇩', voice: 'id-ID', google: 'id',    primary: false, label: 'ID' },
+};
+
+let currentTargetLang = 'en';
+let currentDirection = 'ko-to-foreign'; // or 'foreign-to-ko'
+let translateTimer = null;
+let recognition = null;
+let isRecording = false;
+
+// ============================================
+// QUICK PHRASES (매장 응대 자주 쓰는 문장)
+// ============================================
+const QUICK = {
+  '환영': [
+    { ko: '어서 오세요. 로렐 스튜디오입니다.' },
+    { ko: '오늘 좋은 날이네요. 당신이 방문해 주어서요.' },
+    { ko: '서울에 오신 것을 환영합니다.' },
+    { ko: '먼 길 오시느라 고생 많으셨어요.' },
+    { ko: '신발을 벗어주시고 슬리퍼로 갈아 신어주세요.' },
+    { ko: '이쪽으로 오세요.' },
+    { ko: '편하게 앉으세요.' },
+    { ko: '잠시만 기다려 주세요.' },
+    { ko: '예약자 성함이 어떻게 되시나요?' },
+    { ko: '체크리스트 작성 부탁드립니다.' },
+    { ko: '따뜻한 차 한 잔 드릴까요?' },
+    { ko: '물 한 잔 드릴까요?' },
+  ],
+  '케어 중': [
+    { ko: '베드에 누워주세요.' },
+    { ko: '얼굴을 위로 향하게 해주세요.' },
+    { ko: '편안하게 눈을 감으셔도 좋아요.' },
+    { ko: '오늘 피부 상태를 확인해 드릴게요.' },
+    { ko: '이 부분이 조금 예민하시네요.' },
+    { ko: '아프시거나 불편하시면 언제든 말씀해 주세요.' },
+    { ko: '온도가 괜찮으신가요?' },
+    { ko: '편안하신가요?' },
+    { ko: '잠시 후에 마무리할게요.' },
+    { ko: '천천히 일어나셔도 돼요.' },
+    { ko: '거울로 확인해 보세요.' },
+  ],
+  '귀국 안내': [
+    { ko: '오늘 사용한 제품 안내해 드릴게요.' },
+    { ko: '이 제품들은 한국에서 올리브영, 약국, 다이소에서 쉽게 구매하실 수 있어요.' },
+    { ko: '비싼 제품이 아니라 일상에서 꾸준히 쓸 수 있는 것들이에요.' },
+    { ko: '맞춤 루틴과 전문가팁은 이메일로 보내드릴게요.' },
+    { ko: '한 달 동안 단계별 루틴을 안내해 드릴게요.' },
+    { ko: '귀국 후에도 궁금한 점 있으시면 언제든 이메일로 문의 주세요.' },
+    { ko: '이 봉투는 당신을 위한 작은 선물이에요.' },
+    { ko: '이름을 한글로 적어 두었어요.' },
+  ],
+  '작별': [
+    { ko: '오늘 와주셔서 정말 감사합니다.' },
+    { ko: '오늘 만나서 정말 기뻤어요.' },
+    { ko: '잘 가요.' },
+    { ko: '안녕히 가세요.' },
+    { ko: '좋은 하루 되세요.' },
+    { ko: '좋은 저녁 되세요.' },
+    { ko: '잘 자요. 푹 쉬세요.' },
+    { ko: '즐거운 한국 여행 되세요.' },
+    { ko: '남은 여행도 안전하게 다녀오세요.' },
+    { ko: '집에 잘 도착하시길 바라요.' },
+    { ko: '다음에 또 만나요.' },
+    { ko: '서울에서 또 뵐 수 있길 바라요.' },
+    { ko: '건강하세요.' },
+  ],
+  '문화 설명': [
+    { ko: '이 베드는 온돌이라고 해요. 한국 전통 바닥 난방 방식이에요.' },
+    { ko: '몸을 따뜻하게 데워주어서 피부 케어에 좋아요.' },
+    { ko: '저희 직원들이 입은 옷은 한복이에요. 한국 전통 의상이에요.' },
+    { ko: '한국에서는 실내에서 신발을 벗는 것이 일반적이에요.' },
+    { ko: '이건 한국 전통 차예요. 따뜻하게 드세요.' },
+    { ko: '부채 만들기는 한국 전통 캘리그라피와 함께하는 체험이에요.' },
+    { ko: '당신 이름을 한글로 써드릴게요.' },
+    { ko: '천천히 쉬다 가세요.' },
+  ],
+};
+
+let currentCategory = '환영';
+
+// ============================================
+// INIT
+// ============================================
+function init() {
+  renderLangs();
+  renderQuickTabs();
+  renderQuickList();
+  setupSpeech();
+}
+
+function renderLangs() {
+  const grid = document.getElementById('langGrid');
+  const extra = document.getElementById('langExtra');
+  grid.innerHTML = '';
+  extra.innerHTML = '<option value="">+ 다른 언어 선택...</option>';
+
+  Object.entries(LANGS).forEach(([key, lang]) => {
+    if (lang.primary) {
+      const btn = document.createElement('button');
+      btn.className = 'lang-btn' + (key === currentTargetLang ? ' active' : '');
+      btn.dataset.lang = key;
+      btn.innerHTML = `<div class="lang-flag">${lang.flag}</div><div class="lang-name">${lang.label}</div>`;
+      btn.onclick = () => selectLang(key);
+      grid.appendChild(btn);
+    } else {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = `${lang.flag} ${lang.name}`;
+      extra.appendChild(opt);
+    }
+  });
+
+  extra.onchange = (e) => {
+    if (e.target.value) selectLang(e.target.value);
+  };
+}
+
+function selectLang(key) {
+  currentTargetLang = key;
+  renderLangs();
+  updateDirectionLabels();
+  if (document.getElementById('inputText').value.trim()) {
+    autoTranslate();
+  }
+}
+
+function updateDirectionLabels() {
+  const lang = LANGS[currentTargetLang];
+  if (currentDirection === 'ko-to-foreign') {
+    document.getElementById('dirFrom').textContent = '한국어';
+    document.getElementById('dirTo').textContent = lang.name;
+    document.getElementById('inputText').placeholder = '한국어로 입력하거나 마이크 버튼을 누르세요';
+  } else {
+    document.getElementById('dirFrom').textContent = lang.name;
+    document.getElementById('dirTo').textContent = '한국어';
+    document.getElementById('inputText').placeholder = `${lang.name}로 입력하거나 마이크 버튼을 누르세요`;
+  }
+}
+
+function swapDirection() {
+  currentDirection = currentDirection === 'ko-to-foreign' ? 'foreign-to-ko' : 'ko-to-foreign';
+  // swap input/output
+  const input = document.getElementById('inputText');
+  const output = document.getElementById('outputText');
+  const tmpVal = input.value;
+  const tmpOut = output.classList.contains('empty') ? '' : output.textContent;
+  input.value = tmpOut;
+  if (tmpVal) {
+    output.classList.remove('empty');
+    output.textContent = tmpVal;
+  } else {
+    output.classList.add('empty');
+    output.textContent = '번역 결과가 여기에 표시됩니다';
+  }
+  updateDirectionLabels();
+  if (input.value.trim()) autoTranslate();
+}
+
+function renderQuickTabs() {
+  const tabs = document.getElementById('quickTabs');
+  tabs.innerHTML = '';
+  Object.keys(QUICK).forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'quick-tab' + (cat === currentCategory ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => {
+      currentCategory = cat;
+      renderQuickTabs();
+      renderQuickList();
+    };
+    tabs.appendChild(btn);
+  });
+}
+
+function renderQuickList() {
+  const list = document.getElementById('quickList');
+  list.innerHTML = '';
+  QUICK[currentCategory].forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'quick-item';
+    btn.innerHTML = `<div class="quick-item-ko">${item.ko}</div>`;
+    btn.onclick = () => {
+      document.getElementById('inputText').value = item.ko;
+      // 빠른 문장은 항상 한국어 → 외국어
+      if (currentDirection !== 'ko-to-foreign') {
+        currentDirection = 'ko-to-foreign';
+        updateDirectionLabels();
+      }
+      translate();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    list.appendChild(btn);
+  });
+}
+
+// ============================================
+// TRANSLATE — Google (free, default)
+// ============================================
+async function translate() {
+  const input = document.getElementById('inputText').value.trim();
+  if (!input) {
+    showToast('번역할 텍스트를 입력해주세요');
+    return;
+  }
+
+  const fromLang = currentDirection === 'ko-to-foreign' ? 'ko' : LANGS[currentTargetLang].google;
+  const toLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].google : 'ko';
+
+  showLoading('GOOGLE');
+
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(input)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const translated = data[0].map(item => item[0]).join('');
+    showResult(translated, 'GOOGLE');
+  } catch (e) {
+    showResult('번역 실패. Claude 재번역을 눌러주세요.', 'ERROR');
+  }
+}
+
+function autoTranslate() {
+  clearTimeout(translateTimer);
+  const input = document.getElementById('inputText').value.trim();
+  if (!input) {
+    document.getElementById('outputText').classList.add('empty');
+    document.getElementById('outputText').textContent = '번역 결과가 여기에 표시됩니다';
+    return;
+  }
+  translateTimer = setTimeout(translate, 600);
+}
+
+// ============================================
+// TRANSLATE — Claude (refined)
+// ============================================
+async function translateWithClaude() {
+  const input = document.getElementById('inputText').value.trim();
+  if (!input) {
+    showToast('번역할 텍스트를 입력해주세요');
+    return;
+  }
+
+  const fromLang = currentDirection === 'ko-to-foreign' ? '한국어' : LANGS[currentTargetLang].name;
+  const toLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].name : '한국어';
+
+  showLoading('CLAUDE');
+
+  const prompt = `You are a professional translator for a high-end Korean K-Beauty skincare studio called Laurel Studio in Hongdae, Seoul. The studio serves international guests.
+
+Translate the following ${fromLang} text into natural, warm ${toLang}, in a tone appropriate for a refined skincare studio. Keep it concise and natural — like how a real esthetician would speak. Do not add explanations, only the translation.
+
+Text: "${input}"
+
+Translation:`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    let result = data.content.filter(c => c.type === 'text').map(c => c.text).join('').trim();
+    // 따옴표 제거
+    result = result.replace(/^["']|["']$/g, '').replace(/^Translation:\s*/i, '').trim();
+    showResult(result, 'CLAUDE');
+  } catch (e) {
+    showResult('Claude 번역 실패. Google 번역을 사용해보세요.', 'ERROR');
+  }
+}
+
+// ============================================
+// UI HELPERS
+// ============================================
+function showLoading(engine) {
+  const out = document.getElementById('outputText');
+  out.classList.remove('empty');
+  out.innerHTML = '<span class="loading"><span></span><span></span><span></span></span>';
+  const badge = document.getElementById('engineBadge');
+  badge.textContent = engine;
+  badge.className = 'output-engine-badge' + (engine === 'CLAUDE' ? ' claude' : '');
+}
+
+function showResult(text, engine) {
+  const out = document.getElementById('outputText');
+  out.classList.remove('empty');
+  out.textContent = text;
+  const badge = document.getElementById('engineBadge');
+  badge.textContent = engine;
+  badge.className = 'output-engine-badge' + (engine === 'CLAUDE' ? ' claude' : '');
+}
+
+function clearInput() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').classList.add('empty');
+  document.getElementById('outputText').textContent = '번역 결과가 여기에 표시됩니다';
+}
+
+function copyOutput() {
+  const out = document.getElementById('outputText');
+  if (out.classList.contains('empty')) {
+    showToast('복사할 내용이 없습니다');
+    return;
+  }
+  navigator.clipboard.writeText(out.textContent).then(() => {
+    showToast('복사되었습니다 ✓');
+  });
+}
+
+function speak() {
+  const out = document.getElementById('outputText');
+  if (out.classList.contains('empty')) {
+    showToast('읽을 내용이 없습니다');
+    return;
+  }
+  const utter = new SpeechSynthesisUtterance(out.textContent);
+  const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
+  utter.lang = voiceLang;
+  utter.rate = 0.95;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// ============================================
+// SPEECH RECOGNITION (음성 입력)
+// ============================================
+function setupSpeech() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('micBtn').style.display = 'none';
+    return;
+  }
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = 'ko-KR';
+
+  recognition.onresult = (e) => {
+    let text = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      text += e.results[i][0].transcript;
+    }
+    document.getElementById('inputText').value = text;
+    if (e.results[e.results.length - 1].isFinal) {
+      translate();
+    }
+  };
+
+  recognition.onerror = (e) => {
+    stopMic();
+    if (e.error === 'not-allowed') {
+      showToast('마이크 권한을 허용해주세요');
+    } else {
+      showToast('음성 인식 실패');
+    }
+  };
+
+  recognition.onend = () => stopMic();
+}
+
+function toggleMic() {
+  if (!recognition) return;
+  if (isRecording) {
+    recognition.stop();
+  } else {
+    const lang = currentDirection === 'ko-to-foreign' ? 'ko-KR' : LANGS[currentTargetLang].voice;
+    recognition.lang = lang;
+    try {
+      recognition.start();
+      isRecording = true;
+      document.getElementById('micBtn').classList.add('recording');
+      document.getElementById('micLabel').textContent = '듣는중';
+    } catch (e) {
+      showToast('마이크 시작 실패');
+    }
+  }
+}
+
+function stopMic() {
+  isRecording = false;
+  document.getElementById('micBtn').classList.remove('recording');
+  document.getElementById('micLabel').textContent = '음성';
+}
+
+// ============================================
+// START
+// ============================================
+init();
+</script>
+
+</body>
+</html>
