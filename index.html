@@ -165,6 +165,19 @@
     font-family: inherit;
     font-size: 12px;
     cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-more.active {
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-style: solid;
+    box-shadow: 0 2px 8px rgba(44, 36, 25, 0.2);
+  }
+
+  .lang-more.active select {
+    color: var(--bg);
+    font-weight: 700;
   }
 
   .lang-more select {
@@ -172,14 +185,21 @@
     border: none;
     color: var(--ink);
     font-family: inherit;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     width: 100%;
     text-align: center;
+    text-align-last: center;
     -webkit-appearance: none;
     appearance: none;
     cursor: pointer;
     outline: none;
+  }
+
+  .lang-more select option {
+    color: var(--ink);
+    background: var(--bg-card);
+    font-weight: 500;
   }
 
   /* DIRECTION TOGGLE */
@@ -706,8 +726,11 @@ function init() {
 function renderLangs() {
   const grid = document.getElementById('langGrid');
   const extra = document.getElementById('langExtra');
+  const extraWrap = document.querySelector('.lang-more');
   grid.innerHTML = '';
   extra.innerHTML = '<option value="">+ 다른 언어 선택...</option>';
+
+  let isSubSelected = false;
 
   Object.entries(LANGS).forEach(([key, lang]) => {
     if (lang.primary) {
@@ -721,9 +744,20 @@ function renderLangs() {
       const opt = document.createElement('option');
       opt.value = key;
       opt.textContent = `${lang.flag} ${lang.name}`;
+      if (key === currentTargetLang) {
+        opt.selected = true;
+        isSubSelected = true;
+      }
       extra.appendChild(opt);
     }
   });
+
+  // 드롭다운이 활성화된 상태면 시각 표시
+  if (isSubSelected) {
+    extraWrap.classList.add('active');
+  } else {
+    extraWrap.classList.remove('active');
+  }
 
   extra.onchange = (e) => {
     if (e.target.value) selectLang(e.target.value);
@@ -933,16 +967,32 @@ let availableVoices = [];
 let voicesLoaded = false;
 
 function loadVoices() {
-  availableVoices = window.speechSynthesis.getVoices();
-  if (availableVoices.length > 0) {
-    voicesLoaded = true;
+  try {
+    const synth = window.speechSynthesis || speechSynthesis;
+    if (!synth || typeof synth.getVoices !== 'function') return;
+    availableVoices = synth.getVoices() || [];
+    if (availableVoices.length > 0) {
+      voicesLoaded = true;
+    }
+  } catch (e) {
+    availableVoices = [];
   }
 }
 
-// 음성 목록은 비동기로 로딩됨
-if (typeof window.speechSynthesis !== 'undefined') {
-  loadVoices();
-  window.speechSynthesis.onvoiceschanged = loadVoices;
+// 음성 목록은 비동기로 로딩됨 — 안전하게 시도
+try {
+  if (window.speechSynthesis) {
+    loadVoices();
+    if (typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    // 안드로이드 크롬을 위한 추가 시도 (지연 로딩)
+    setTimeout(loadVoices, 100);
+    setTimeout(loadVoices, 500);
+    setTimeout(loadVoices, 1000);
+  }
+} catch (e) {
+  console.log('Speech synthesis not available:', e);
 }
 
 function findBestVoice(targetLang) {
@@ -968,7 +1018,15 @@ function speak() {
     return;
   }
 
-  if (typeof window.speechSynthesis === 'undefined') {
+  // SpeechSynthesis 지원 체크 — 유연한 방식
+  let synth;
+  try {
+    synth = window.speechSynthesis || speechSynthesis;
+  } catch (e) {
+    synth = null;
+  }
+
+  if (!synth || typeof synth.speak !== 'function') {
     showToast('이 브라우저는 음성 출력을 지원하지 않습니다');
     return;
   }
@@ -976,45 +1034,55 @@ function speak() {
   const text = out.textContent;
   const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
 
-  // 음성 목록 아직 로딩 안 됨
+  // 음성 목록 로딩 시도
   if (availableVoices.length === 0) {
-    loadVoices();
+    try {
+      availableVoices = synth.getVoices() || [];
+    } catch (e) {
+      availableVoices = [];
+    }
     if (availableVoices.length === 0) {
       // 한 번 더 기다림
-      setTimeout(() => speak(), 200);
+      setTimeout(() => speak(), 250);
       return;
     }
   }
 
   const voice = findBestVoice(voiceLang);
 
-  // 해당 언어 음성 없음
-  if (!voice) {
-    const langName = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].name : '한국어';
-    showToast(`${langName} 음성이 기기에 설치되지 않았습니다`);
-    return;
-  }
-
   // 진행 중인 음성 중단
-  window.speechSynthesis.cancel();
+  try { synth.cancel(); } catch (e) {}
 
   const utter = new SpeechSynthesisUtterance(text);
-  utter.voice = voice;
-  utter.lang = voice.lang;
+  if (voice) {
+    utter.voice = voice;
+    utter.lang = voice.lang;
+  } else {
+    // 음성 없어도 lang만 지정해서 시도 — 시스템이 알아서 처리할 수도 있음
+    utter.lang = voiceLang;
+  }
   utter.rate = 0.92;
   utter.pitch = 1.0;
   utter.volume = 1.0;
 
   utter.onerror = (e) => {
-    showToast('음성 출력 실패: ' + (e.error || 'unknown'));
+    const errMsg = e.error || 'unknown';
+    if (errMsg === 'not-allowed') {
+      showToast('음성 권한이 차단되어 있습니다');
+    } else if (errMsg === 'language-unavailable' || errMsg === 'voice-unavailable') {
+      const langName = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].name : '한국어';
+      showToast(`${langName} 음성이 기기에 설치되지 않았습니다`);
+    } else {
+      showToast('음성 출력 실패: ' + errMsg);
+    }
   };
 
   // iOS Safari 핵 — 짧은 지연 후 실행
   setTimeout(() => {
     try {
-      window.speechSynthesis.speak(utter);
+      synth.speak(utter);
     } catch (err) {
-      showToast('음성 재생 실패');
+      showToast('음성 재생 실패: ' + (err.message || err));
     }
   }, 50);
 }
