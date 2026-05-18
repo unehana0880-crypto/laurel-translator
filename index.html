@@ -571,7 +571,7 @@
     <div class="output-engine-badge" id="engineBadge">GOOGLE</div>
     <div class="output-text empty" id="outputText">번역 결과가 여기에 표시됩니다</div>
     <div class="output-toolbar">
-      <button onclick="speak()">🔊 듣기</button>
+      <button onclick="speak()" ondblclick="showAvailableVoices()" title="더블클릭: 사용 가능한 음성 확인">🔊 듣기</button>
       <button onclick="copyOutput()">📋 복사</button>
       <button class="tool-btn claude" style="flex:1;padding:10px;font-size:11px;" onclick="translateWithClaude()">✦ Claude로 재번역</button>
     </div>
@@ -926,18 +926,118 @@ function copyOutput() {
   });
 }
 
+// ============================================
+// SPEECH SYNTHESIS (음성 출력)
+// ============================================
+let availableVoices = [];
+let voicesLoaded = false;
+
+function loadVoices() {
+  availableVoices = window.speechSynthesis.getVoices();
+  if (availableVoices.length > 0) {
+    voicesLoaded = true;
+  }
+}
+
+// 음성 목록은 비동기로 로딩됨
+if (typeof window.speechSynthesis !== 'undefined') {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function findBestVoice(targetLang) {
+  if (availableVoices.length === 0) {
+    loadVoices();
+  }
+  // 1차: 완전 일치 (예: 'ko-KR')
+  let voice = availableVoices.find(v => v.lang === targetLang);
+  if (voice) return voice;
+  // 2차: 언어 코드만 일치 (예: 'ko')
+  const langCode = targetLang.split('-')[0];
+  voice = availableVoices.find(v => v.lang.startsWith(langCode + '-'));
+  if (voice) return voice;
+  // 3차: 언어 코드 부분 매치
+  voice = availableVoices.find(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()));
+  return voice || null;
+}
+
 function speak() {
   const out = document.getElementById('outputText');
   if (out.classList.contains('empty')) {
     showToast('읽을 내용이 없습니다');
     return;
   }
-  const utter = new SpeechSynthesisUtterance(out.textContent);
+
+  if (typeof window.speechSynthesis === 'undefined') {
+    showToast('이 브라우저는 음성 출력을 지원하지 않습니다');
+    return;
+  }
+
+  const text = out.textContent;
   const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
-  utter.lang = voiceLang;
-  utter.rate = 0.95;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
+
+  // 음성 목록 아직 로딩 안 됨
+  if (availableVoices.length === 0) {
+    loadVoices();
+    if (availableVoices.length === 0) {
+      // 한 번 더 기다림
+      setTimeout(() => speak(), 200);
+      return;
+    }
+  }
+
+  const voice = findBestVoice(voiceLang);
+
+  // 해당 언어 음성 없음
+  if (!voice) {
+    const langName = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].name : '한국어';
+    showToast(`${langName} 음성이 기기에 설치되지 않았습니다`);
+    return;
+  }
+
+  // 진행 중인 음성 중단
+  window.speechSynthesis.cancel();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.voice = voice;
+  utter.lang = voice.lang;
+  utter.rate = 0.92;
+  utter.pitch = 1.0;
+  utter.volume = 1.0;
+
+  utter.onerror = (e) => {
+    showToast('음성 출력 실패: ' + (e.error || 'unknown'));
+  };
+
+  // iOS Safari 핵 — 짧은 지연 후 실행
+  setTimeout(() => {
+    try {
+      window.speechSynthesis.speak(utter);
+    } catch (err) {
+      showToast('음성 재생 실패');
+    }
+  }, 50);
+}
+
+function showAvailableVoices() {
+  loadVoices();
+  if (availableVoices.length === 0) {
+    showToast('음성 목록을 불러올 수 없습니다');
+    return;
+  }
+  // 현재 선택된 언어의 음성 찾기
+  const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
+  const langCode = voiceLang.split('-')[0];
+  const matched = availableVoices.filter(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()));
+  const total = availableVoices.length;
+
+  let msg = `전체 음성: ${total}개\n`;
+  if (matched.length > 0) {
+    msg += `${LANGS[currentTargetLang]?.name || '현재 언어'} 음성: ${matched.length}개 사용 가능 ✓`;
+  } else {
+    msg += `${LANGS[currentTargetLang]?.name || '현재 언어'} 음성: 설치 안 됨 ✗`;
+  }
+  alert(msg + '\n\n전체 목록:\n' + availableVoices.map(v => `${v.lang} - ${v.name}`).join('\n'));
 }
 
 function showToast(msg) {
