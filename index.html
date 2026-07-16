@@ -470,10 +470,11 @@
   }
 
   .quick-item-sub {
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--ink-faint);
-    margin-top: 3px;
+    margin-top: 4px;
     font-style: italic;
+    line-height: 1.4;
   }
 
   /* LOADING */
@@ -645,6 +646,8 @@ let isRecording = false;
 
 // ============================================
 // QUICK PHRASES (매장 응대 자주 쓰는 문장)
+//  - en 필드가 있으면: 영어 선택 시 그 영문을 그대로 표시 (전문가팁·바디케어)
+//  - en 없으면: 클릭 시 구글/클로드 자동 번역
 // ============================================
 const QUICK = {
   '환영': [
@@ -674,6 +677,46 @@ const QUICK = {
     { ko: '천천히 일어나셔도 돼요.' },
     { ko: '거울로 확인해 보세요.' },
   ],
+  '🛁바디케어': [
+    { ko: '이제 4층으로 올라가 바디 케어를 진행할게요.', en: "Now we'll go upstairs for your body care." },
+    { ko: '세라젬이라는 특별한 한국 기기를 사용해요. 척추 라인을 스캔해서 딱 맞게 따뜻한 케어를 해드려요.', en: "We use a special Korean device called CERAGEM. It scans your spine and gives gentle, warm care exactly where you need it." },
+    { ko: '(여성) 상의와 속옷을 벗고 이 가운으로 갈아입어 주세요. 준비되시면 이 종을 울려 불러주세요.', en: "Please take off your top and bra, and change into this gown. When you're ready, ring this bell to call me." },
+    { ko: '(남성) 상의를 벗고 이 나시로 갈아입어 주세요. 준비되시면 이 종을 울려주세요.', en: "Please take off your top and change into this sleeveless top. When you're ready, ring this bell to call me." },
+    { ko: '머리를 위쪽으로 두고 미끄러지듯 편하게 누워주세요. 목 위치는 제가 맞춰드릴게요.', en: "Please lie down with your head at the top and slide down gently. I'll adjust the position for your neck." },
+    { ko: '이제 웰컴 가이드를 틀어드릴게요. 숨을 편히 내쉬며 쉬세요. 아프시면 말씀해 주세요.', en: "Now I'll play a short welcome guide. Just breathe out slowly and relax. If anything hurts, please tell me." },
+    { ko: '온도가 너무 뜨겁거나 차가우면 종을 울려 알려주세요.', en: "If the temperature is too hot or too cold, please ring the bell." },
+    { ko: '숨을 편히 내쉬며 천천히 일어나 주세요. 어지럽지 않게 레몬차를 준비했어요. 드시고 천천히 옷을 갈아입고 나오세요.', en: "Breathe out slowly and rise up gently. I've prepared lemon tea so you won't feel dizzy. Please enjoy it, change slowly, and come out when you're ready." },
+  ],
+  '💧보습': [
+    { ko: '피부가 기름져 보여도 사실은 속이 건조해서, 피부가 자신을 지키려고 기름을 더 만들어내는 거예요. 보습을 잘 하면 오히려 기름과 트러블이 줄어들어요.', en: "Your skin looks oily, but underneath it's actually dry — it makes extra oil to protect itself. So hydrating it well is exactly what calms the oil and the breakouts." },
+    { ko: '세안 후 1분 안에, 물기가 살짝 있을 때 크림을 발라주세요. 그래야 수분이 날아가지 않고 갇혀요.', en: "Apply your cream within 1 minute of washing, while your skin is still slightly damp — that's how you lock the moisture in." },
+    { ko: '크림은 넉넉히, 손바닥으로 지그시 눌러 흡수시켜 주세요. 문지르지 마세요.', en: "Use plenty, and press it in gently with your palms — don't rub." },
+  ],
+  '🚫각질': [
+    { ko: '각질제거나 스크럽은 하지 마세요. 피부를 얇고 예민하게 만들어서 홍조와 트러블이 심해져요. 각질이 있는 것 같아도 아직 재생 중일 뿐이니 억지로 벗기지 마세요.', en: "Please don't exfoliate or scrub — it thins and irritates the skin, making redness and breakouts worse. If it feels flaky, it just means your skin hasn't finished renewing yet — don't force it off." },
+    { ko: '여드름은 절대 짜지 마세요. 짜면 자국(색소)이 훨씬 오래 남아요. 샤워하면서 자연스럽게 나오게 두는 게 가장 좋아요.', en: "Please never squeeze your breakouts — squeezing leaves a dark mark that lasts far longer. Let them clear naturally in the shower instead." },
+    { ko: '손으로 얼굴을 만지지 마세요. 손의 유분과 세균이 트러블을 악화시켜요.', en: "Try not to touch your face — your hands carry oil and bacteria that make breakouts worse." },
+  ],
+  '🧼세안': [
+    { ko: '세안은 미지근한 물로, 손으로 하세요. 샤워기를 얼굴에 직접 대지 마세요. (미온수 = 내 피부 온도와 비슷한, 살짝 시원하면서 따뜻한 정도)', en: "Wash with lukewarm water using your hands — never point the shower head at your face. Lukewarm means close to your skin's own temperature: slightly cool but with a hint of warmth." },
+    { ko: '선크림이나 화장을 했다면, 클렌징밀크로 먼저 녹인 뒤 약산성 세안제로 씻어주세요. 선크림은 폼클렌저로 완벽히 안 지워져서, 남으면 모공에 끼어 트러블이 돼요.', en: "If you're wearing sunscreen or makeup, melt it off with a cleansing milk first, then wash with a mild low-pH cleanser. Sunscreen can't be fully removed by foam cleanser alone — leftover residue settles into pores and causes breakouts." },
+    { ko: '우리 피부는 약한 산성이 좋아요. 알칼리성 세안제는 화장실 청소하는 락스처럼 보호막까지 벗겨내요. 뽀득한 느낌은 사실 보호막이 벗겨진 거예요. 각질은 중요한 보호막이라 지켜야 해요.', en: "Our skin prefers to be slightly acidic. A cleanser closer to alkaline works like bleach for cleaning a bathroom — it strips the protective film that guards your skin. That squeaky-clean feeling is actually your barrier being stripped away. Your outer layer is important protection — keep it." },
+    { ko: '세안할 때 턱수염 사이사이를 몇 번 더 헹궈주세요. 남은 잔여물이 세균의 먹이가 되고 트러블의 원인이 돼요.', en: "Rinse thoroughly through your beard a few extra times — trapped residue there feeds bacteria and causes breakouts." },
+  ],
+  '☀️선크림': [
+    { ko: '선크림은 매일 아침 꼭 바르세요. 자외선은 콜라겐을 파괴하고 색소를 만들기 때문에, 최고의 노화 방지이자 미백 단계예요.', en: "Wear sunscreen every morning — UV breaks down collagen and drives pigmentation, so it's your #1 anti-aging and brightening step." },
+    { ko: '매트한 제품 말고 촉촉한 타입의 선크림을 쓰세요. 매트한 제품은 피부의 수분·유분을 흡착해 건조하게 만들고, 오히려 기름과 색소를 유발해요. (무기자차보다 유기자차·혼합자차가 나은 이유와 같아요.)', en: "Choose a dewy sunscreen, not a matte one. Matte formulas absorb your skin's own water and oil to stay put, which dries the skin over time and triggers more oil and pigmentation — the same reason chemical or hybrid filters often suit skin better than pure mineral ones." },
+  ],
+  '🧬피부원리': [
+    { ko: '피부가 얇아서 아래 실핏줄이 비쳐 홍조가 보이고, 색소도 잘 올라오고 자극에 약해요. 홍조는 혈관이 확장된 뒤 수축시키는 시스템에 문제가 있거나 수분이 부족해서예요. 그래서 장벽을 튼튼히 하는 게 먼저예요.', en: "Your skin is thin, so the vessels beneath show through as redness, it pigments easily, and it's easily irritated. Redness appears when blood vessels dilate and stay dilated — either the system that constricts them isn't working, or there isn't enough hydration to help them contract. So strengthening the barrier comes first." },
+    { ko: '나이가 들며 콜라겐이 줄면 모공을 잡아주던 힘이 느슨해져서 모공이 커지고 탄력이 떨어져요. 레티놀이 콜라겐을 다시 만들어줘요.', en: "As collagen declines with age, the drawstring holding your pores loosens — so pores enlarge and firmness fades. Retinol rebuilds that collagen." },
+    { ko: '멜라닌이 많은 피부는 자극을 받으면 색소가 진하게, 오래 남아요. 그래서 짜거나 문지르지 말고 부드럽게 관리해야 해요.', en: "Melanin-rich skin marks easily and the pigment lingers — so never scrub or squeeze; gentle care is everything." },
+  ],
+  '🌸홈케어팁': [
+    { ko: '제품은 저희 매장이 아니라 올리브영, 다이소, 약국에서 사시면 돼요. 서울 어디에나 있어요.', en: "You can buy the products at Olive Young, Daiso, or a pharmacy (not at our studio) — they're all over Seoul." },
+    { ko: '한 번에 다 하려 하면 피부가 지쳐요. 먼저 보습과 장벽 강화로 피부를 튼튼하게 만든 뒤, 순서대로 하나씩 더해가세요. (아플 땐 운동보다 체력 회복이 먼저인 것과 같아요.)', en: "Trying to do everything at once only tires your skin out. Think of it like being unwell — you'd build your strength back before running. First strengthen your skin with hydration and barrier care; once it's healthy, add each active step one at a time." },
+    { ko: '오늘 만나서 정말 반가웠어요. 피부로 고민이 생기면 명함의 이메일로 언제든 편하게 연락 주세요 🤍', en: "It was so lovely to meet you today. Whenever your skin troubles you, reach out anytime by email — it's on the card I gave you 🤍" },
+  ],
   '귀국 안내': [
     { ko: '오늘 사용한 제품 안내해 드릴게요.' },
     { ko: '이 제품들은 한국에서 올리브영, 약국, 다이소에서 쉽게 구매하실 수 있어요.' },
@@ -681,8 +724,7 @@ const QUICK = {
     { ko: '맞춤 루틴과 전문가팁은 이메일로 보내드릴게요.' },
     { ko: '한 달 동안 단계별 루틴을 안내해 드릴게요.' },
     { ko: '귀국 후에도 궁금한 점 있으시면 언제든 이메일로 문의 주세요.' },
-    { ko: '이 봉투는 당신을 위한 작은 선물이에요.' },
-    { ko: '이름을 한글로 적어 두었어요.' },
+    { ko: '이것은 당신의 한국 이름입니다. 선물이에요.' },
   ],
   '작별': [
     { ko: '오늘 와주셔서 정말 감사합니다.' },
@@ -752,7 +794,6 @@ function renderLangs() {
     }
   });
 
-  // 드롭다운이 활성화된 상태면 시각 표시
   if (isSubSelected) {
     extraWrap.classList.add('active');
   } else {
@@ -788,7 +829,6 @@ function updateDirectionLabels() {
 
 function swapDirection() {
   currentDirection = currentDirection === 'ko-to-foreign' ? 'foreign-to-ko' : 'ko-to-foreign';
-  // swap input/output
   const input = document.getElementById('inputText');
   const output = document.getElementById('outputText');
   const tmpVal = input.value;
@@ -827,7 +867,9 @@ function renderQuickList() {
   QUICK[currentCategory].forEach(item => {
     const btn = document.createElement('button');
     btn.className = 'quick-item';
-    btn.innerHTML = `<div class="quick-item-ko">${item.ko}</div>`;
+    let html = `<div class="quick-item-ko">${item.ko}</div>`;
+    if (item.en) html += `<div class="quick-item-sub">${item.en}</div>`;
+    btn.innerHTML = html;
     btn.onclick = () => {
       document.getElementById('inputText').value = item.ko;
       // 빠른 문장은 항상 한국어 → 외국어
@@ -835,7 +877,12 @@ function renderQuickList() {
         currentDirection = 'ko-to-foreign';
         updateDirectionLabels();
       }
-      translate();
+      // 미리 준비된 영문이 있고 대상이 영어면 → 그 영문 그대로 표시 (구글 번역 안 함)
+      if (item.en && currentTargetLang === 'en') {
+        showResult(item.en, 'LAUREL');
+      } else {
+        translate();
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     list.appendChild(btn);
@@ -914,7 +961,6 @@ Translation:`;
     });
     const data = await response.json();
     let result = data.content.filter(c => c.type === 'text').map(c => c.text).join('').trim();
-    // 따옴표 제거
     result = result.replace(/^["']|["']$/g, '').replace(/^Translation:\s*/i, '').trim();
     showResult(result, 'CLAUDE');
   } catch (e) {
@@ -925,13 +971,15 @@ Translation:`;
 // ============================================
 // UI HELPERS
 // ============================================
+function isGold(engine) { return engine === 'CLAUDE' || engine === 'LAUREL'; }
+
 function showLoading(engine) {
   const out = document.getElementById('outputText');
   out.classList.remove('empty');
   out.innerHTML = '<span class="loading"><span></span><span></span><span></span></span>';
   const badge = document.getElementById('engineBadge');
   badge.textContent = engine;
-  badge.className = 'output-engine-badge' + (engine === 'CLAUDE' ? ' claude' : '');
+  badge.className = 'output-engine-badge' + (isGold(engine) ? ' claude' : '');
 }
 
 function showResult(text, engine) {
@@ -940,7 +988,7 @@ function showResult(text, engine) {
   out.textContent = text;
   const badge = document.getElementById('engineBadge');
   badge.textContent = engine;
-  badge.className = 'output-engine-badge' + (engine === 'CLAUDE' ? ' claude' : '');
+  badge.className = 'output-engine-badge' + (isGold(engine) ? ' claude' : '');
 }
 
 function clearInput() {
@@ -979,14 +1027,12 @@ function loadVoices() {
   }
 }
 
-// 음성 목록은 비동기로 로딩됨 — 안전하게 시도
 try {
   if (window.speechSynthesis) {
     loadVoices();
     if (typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
-    // 안드로이드 크롬을 위한 추가 시도 (지연 로딩)
     setTimeout(loadVoices, 100);
     setTimeout(loadVoices, 500);
     setTimeout(loadVoices, 1000);
@@ -999,14 +1045,11 @@ function findBestVoice(targetLang) {
   if (availableVoices.length === 0) {
     loadVoices();
   }
-  // 1차: 완전 일치 (예: 'ko-KR')
   let voice = availableVoices.find(v => v.lang === targetLang);
   if (voice) return voice;
-  // 2차: 언어 코드만 일치 (예: 'ko')
   const langCode = targetLang.split('-')[0];
   voice = availableVoices.find(v => v.lang.startsWith(langCode + '-'));
   if (voice) return voice;
-  // 3차: 언어 코드 부분 매치
   voice = availableVoices.find(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()));
   return voice || null;
 }
@@ -1018,7 +1061,6 @@ function speak() {
     return;
   }
 
-  // SpeechSynthesis 지원 체크 — 유연한 방식
   let synth;
   try {
     synth = window.speechSynthesis || speechSynthesis;
@@ -1034,7 +1076,6 @@ function speak() {
   const text = out.textContent;
   const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
 
-  // 음성 목록 로딩 시도
   if (availableVoices.length === 0) {
     try {
       availableVoices = synth.getVoices() || [];
@@ -1042,7 +1083,6 @@ function speak() {
       availableVoices = [];
     }
     if (availableVoices.length === 0) {
-      // 한 번 더 기다림
       setTimeout(() => speak(), 250);
       return;
     }
@@ -1050,7 +1090,6 @@ function speak() {
 
   const voice = findBestVoice(voiceLang);
 
-  // 진행 중인 음성 중단
   try { synth.cancel(); } catch (e) {}
 
   const utter = new SpeechSynthesisUtterance(text);
@@ -1058,7 +1097,6 @@ function speak() {
     utter.voice = voice;
     utter.lang = voice.lang;
   } else {
-    // 음성 없어도 lang만 지정해서 시도 — 시스템이 알아서 처리할 수도 있음
     utter.lang = voiceLang;
   }
   utter.rate = 0.92;
@@ -1077,7 +1115,6 @@ function speak() {
     }
   };
 
-  // iOS Safari 핵 — 짧은 지연 후 실행
   setTimeout(() => {
     try {
       synth.speak(utter);
@@ -1093,7 +1130,6 @@ function showAvailableVoices() {
     showToast('음성 목록을 불러올 수 없습니다');
     return;
   }
-  // 현재 선택된 언어의 음성 찾기
   const voiceLang = currentDirection === 'ko-to-foreign' ? LANGS[currentTargetLang].voice : 'ko-KR';
   const langCode = voiceLang.split('-')[0];
   const matched = availableVoices.filter(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()));
