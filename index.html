@@ -530,6 +530,57 @@
     letter-spacing: 0.08em;
   }
 
+
+  /* VIEW TABS + STUDY (암기장) */
+  .view-tabs { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:16px; }
+  .view-tab { padding:12px; border:1px solid var(--line); background:var(--bg-card); border-radius:var(--radius-sm); font-family:inherit; font-size:13px; font-weight:700; color:var(--ink-soft); cursor:pointer; }
+  .view-tab.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .st-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10px; }
+  .st-head .section-label { margin-bottom:0; }
+  .st-streak { font-size:12px; color:var(--ink-soft); }
+  .st-streak b { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--gold-deep); margin:0 3px; font-weight:500; }
+  .st-row { display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:10px; }
+  .st-row::-webkit-scrollbar { display:none; }
+  .st-pill { flex-shrink:0; padding:9px 14px; border:1px solid var(--line); background:var(--bg-card); border-radius:100px; font-family:inherit; font-size:12px; font-weight:600; color:var(--ink-soft); cursor:pointer; white-space:nowrap; }
+  .st-pill small { opacity:.7; margin-left:5px; font-size:10px; }
+  .st-pill.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .st-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:12px; }
+  .st-tab { padding:11px 6px; border:1px solid var(--line); background:var(--bg-card); border-radius:var(--radius-sm); font-family:inherit; font-size:12px; font-weight:600; color:var(--ink-soft); cursor:pointer; }
+  .st-tab.active { background:var(--bg-accent); color:var(--gold-deep); border-color:var(--gold); }
+  .st-card { background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px; }
+  .st-cat { font-size:10px; font-weight:700; letter-spacing:0.18em; color:var(--gold-deep); text-transform:uppercase; }
+  .st-ko { font-size:19px; line-height:1.5; font-weight:500; }
+  .st-fx { font-size:21px; line-height:1.5; word-break:break-word; }
+  .st-pr { font-size:15px; color:var(--ink-soft); line-height:1.5; word-break:break-word; }
+  .st-ans { border-top:1px solid var(--line); padding-top:14px; display:flex; flex-direction:column; gap:8px; }
+  .st-btn { padding:14px; border:1px solid var(--ink); background:var(--ink); color:var(--bg); border-radius:var(--radius-sm); font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+  .st-btn.soft { background:var(--bg-accent); color:var(--gold-deep); border-color:var(--gold); }
+  .st-btn.warn { background:#fff; color:var(--warning); border-color:var(--warning); }
+  .st-btn[disabled] { opacity:0.4; cursor:default; }
+  .st-btns { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .st-spk { align-self:flex-start; padding:9px 18px; border:1px solid var(--line); background:var(--bg-card); border-radius:100px; font-family:inherit; font-size:12px; font-weight:700; color:var(--ink); cursor:pointer; }
+  .st-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .st-stat { background:var(--bg); border-radius:var(--radius-sm); padding:12px 6px; text-align:center; }
+  .st-stat b { display:block; font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:500; color:var(--ink); }
+  .st-stat span { font-size:11px; color:var(--ink-soft); }
+  .st-prog { height:5px; background:var(--bg-accent); border-radius:3px; overflow:hidden; }
+  .st-prog i { display:block; height:100%; background:var(--gold); }
+  .st-big { font-family:'Cormorant Garamond',serif; font-size:44px; color:var(--gold-deep); line-height:1; }
+  .st-opts { display:flex; flex-direction:column; gap:8px; }
+  .st-opt { width:100%; text-align:left; padding:12px 14px; border:1px solid var(--line); background:var(--bg-card); border-radius:var(--radius-sm); font-family:inherit; font-size:15px; line-height:1.4; color:var(--ink); cursor:pointer; word-break:break-word; }
+  .st-opt.right { border-color:var(--green-leaf); background:#EEF4EE; }
+  .st-opt.wrong { border-color:var(--warning); background:#FBEDE8; }
+  .st-item { border-top:1px solid var(--line); padding-top:12px; display:flex; flex-direction:column; gap:2px; cursor:pointer; }
+  .st-item .k { font-size:12px; color:var(--ink-faint); }
+  .st-item .f { font-size:16px; word-break:break-word; }
+  .st-item .p { font-size:13px; color:var(--ink-soft); word-break:break-word; }
+  .st-cover .f, .st-cover .p { filter:blur(7px); user-select:none; }
+  .st-cover.show .f, .st-cover.show .p { filter:none; user-select:auto; }
+  .st-chk { font-size:10px; color:var(--green-leaf); margin-left:6px; font-weight:700; }
+  .st-sw { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-soft); }
+  .st-sw select { font-family:inherit; font-size:13px; padding:6px; border:1px solid var(--line); border-radius:8px; background:var(--bg-card); color:var(--ink); }
+  .st-note { font-size:11px; color:var(--ink-faint); line-height:1.6; }
+
   /* SMALL SCREEN */
   @media (max-width: 380px) {
     .lang-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
@@ -548,6 +599,14 @@
 </header>
 
 <div class="container">
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab active" id="vtTr" onclick="showView('translate')">번역기</button>
+    <button class="view-tab" id="vtSt" onclick="showView('study')">외국어 암기장</button>
+  </div>
+
+  <div id="viewTranslate">
 
   <!-- LANGUAGE PICKER -->
   <div class="lang-section">
@@ -603,6 +662,24 @@
     <div class="section-label">Quick Phrases · 빠른 문장</div>
     <div class="quick-tabs" id="quickTabs"></div>
     <div class="quick-list" id="quickList"></div>
+  </div>
+
+  </div><!-- /viewTranslate -->
+
+  <!-- STUDY (외국어 암기장) -->
+  <div id="viewStudy" hidden>
+    <div class="st-head">
+      <div class="section-label">Study · 암기할 언어</div>
+      <div class="st-streak">연속<b id="stStreak">0</b>일</div>
+    </div>
+    <div class="st-row" id="stLangs"></div>
+    <div class="st-tabs" id="stTabs">
+      <button class="st-tab active" data-v="study">학습</button>
+      <button class="st-tab" data-v="quiz">퀴즈</button>
+      <button class="st-tab" data-v="list">전체 목록</button>
+    </div>
+    <div class="st-card" id="stMain"></div>
+    <p class="st-note" style="margin-top:12px">한글 발음은 근사치입니다. 진도는 이 기기의 브라우저에 저장됩니다.</p>
   </div>
 
   <div class="footer">
@@ -1211,6 +1288,265 @@ function stopMic() {
   document.getElementById('micBtn').classList.remove('recording');
   document.getElementById('micLabel').textContent = '음성';
 }
+
+// ============================================
+// VIEW SWITCH (번역기 / 암기장)
+// ============================================
+function showView(v) {
+  var st = v === 'study';
+  document.getElementById('viewTranslate').hidden = st;
+  document.getElementById('viewStudy').hidden = !st;
+  document.getElementById('vtTr').classList.toggle('active', !st);
+  document.getElementById('vtSt').classList.toggle('active', st);
+  if (st && window.studyRender) window.studyRender();
+  window.scrollTo({ top: 0 });
+}
+
+// ============================================
+// STUDY (외국어 암기장) — 음성은 위 번역기의 findBestVoice를 그대로 사용
+// ============================================
+(function () {
+// [카테고리, 한국어, 영어, 발음, 스페인어, 발음, 독일어, 발음, 프랑스어, 발음]
+var ROWS = [
+["맞이","로렐 스튜디오에 오신 것을 환영합니다","Welcome to Laurel Studio.","웰컴 투 로렐 스튜디오","Bienvenidos a Laurel Studio.","비엔베니도스 아 로렐 스튜디오","Willkommen im Laurel Studio.","빌콤멘 임 로렐 스튜디오","Bienvenue chez Laurel Studio.","비앙브뉘 셰 로렐 스튜디오"],
+["맞이","예약하셨나요?","Do you have a reservation?","두 유 해브 어 레저베이션","¿Tiene una reserva?","티에네 우나 레세르바","Haben Sie reserviert?","하벤 지 레저비어트","Avez-vous réservé ?","아베부 레제르베"],
+["맞이","신발은 여기서 벗어 주세요","Please take off your shoes here.","플리즈 테이크 오프 유어 슈즈 히어","Por favor, quítese los zapatos aquí.","포르 파보르 키테세 로스 사파토스 아키","Bitte ziehen Sie hier Ihre Schuhe aus.","비테 치엔 지 히어 이레 슈에 아우스","Veuillez enlever vos chaussures ici.","뵈이예 앙르베 보 쇼쉬르 이씨"],
+["맞이","이 문진표를 작성해 주세요","Please fill out this form.","플리즈 필 아웃 디스 폼","Por favor, rellene este formulario.","포르 파보르 레예네 에스테 포르무라리오","Bitte füllen Sie dieses Formular aus.","비테 퓔렌 지 디제스 포르물라 아우스","Veuillez remplir ce formulaire.","뵈이예 랑플리르 스 포르뮐레르"],
+["맞이","잠시만 기다려 주세요","Please wait a moment.","플리즈 웨잇 어 모먼트","Un momento, por favor.","운 모멘토 포르 파보르","Einen Moment, bitte.","아이넨 모멘트 비테","Un instant, s'il vous plaît.","앙 낭스탕 실 부 플레"],
+["맞이","제 외국어가 완벽하진 않지만 최선을 다할게요","My English isn't perfect, but I'll do my best.","마이 잉글리시 이즌트 퍼펙트 벗 아일 두 마이 베스트","No hablo muy bien español, pero haré lo posible.","노 아블로 무이 비엔 에스파뇰 페로 아레 로 포시블레","Mein Deutsch ist nicht perfekt, aber ich gebe mein Bestes.","마인 도이치 이스트 니히트 페르펙트 아버 이히 게베 마인 베스테스","Mon français n'est pas parfait, mais je fais de mon mieux.","몽 프랑세 네 파 파르페 메 쥬 페 드 몽 미외"],
+["문진","가장 큰 피부 고민이 무엇인가요?","What is your main skin concern?","왓 이즈 유어 메인 스킨 컨선","¿Cuál es su principal preocupación de piel?","쿠알 에스 수 프린시팔 프레오쿠파시온 데 피엘","Was ist Ihr größtes Hautproblem?","바스 이스트 이어 그뢰스테스 하우트프로블렘","Quelle est votre principale préoccupation de peau ?","켈 에 보트르 프랭시팔 프레오퀴파시옹 드 포"],
+["문진","민감성 피부이신가요?","Do you have sensitive skin?","두 유 해브 센서티브 스킨","¿Tiene la piel sensible?","티에네 라 피엘 센시블레","Haben Sie empfindliche Haut?","하벤 지 엠핀들리혜 하우트","Avez-vous la peau sensible ?","아베부 라 포 상시블"],
+["문진","알레르기가 있으신가요?","Do you have any allergies?","두 유 해브 애니 앨러지스","¿Tiene alguna alergia?","티에네 알구나 알레르히아","Haben Sie Allergien?","하벤 지 알레르기엔","Avez-vous des allergies ?","아베부 데 잘레르지"],
+["문진","임신 중이신가요?","Are you pregnant?","아 유 프레그넌트","¿Está embarazada?","에스타 엠바라사다","Sind Sie schwanger?","진트 지 슈방어","Êtes-vous enceinte ?","에트부 장생트"],
+["문진","복용 중인 약이 있으신가요?","Are you taking any medication?","아 유 테이킹 애니 메디케이션","¿Está tomando algún medicamento?","에스타 토만도 알군 메디카멘토","Nehmen Sie Medikamente?","네멘 지 메디카멘테","Prenez-vous des médicaments ?","프르네부 데 메디카망"],
+["케어 중","여기에 누워 주세요","Please lie down here.","플리즈 라이 다운 히어","Por favor, recuéstese aquí.","포르 파보르 레쿠에스테세 아키","Bitte legen Sie sich hier hin.","비테 레겐 지 지히 히어 힌","Veuillez vous allonger ici.","뵈이예 부 잘롱제 이씨"],
+["케어 중","먼저 클렌징을 해 드릴게요","First, I'll cleanse your face.","퍼스트 아일 클렌즈 유어 페이스","Primero, voy a limpiarle el rostro.","프리메로 보이 아 림피아르레 엘 로스트로","Zuerst reinige ich Ihr Gesicht.","추어스트 라이니게 이히 이어 게지히트","D'abord, je vais nettoyer votre visage.","다보르 쥬 베 네투아이에 보트르 비자주"],
+["케어 중","압은 괜찮으세요?","Is the pressure okay for you?","이즈 더 프레셔 오케이 포 유","¿Está bien la presión?","에스타 비엔 라 프레시온","Ist der Druck angenehm?","이스트 데어 드룩 안게네엠","La pression vous convient ?","라 프레시옹 부 콩비앵"],
+["케어 중","온도는 괜찮으세요?","Is the temperature okay?","이즈 더 템퍼러처 오케이","¿Está bien la temperatura?","에스타 비엔 라 템페라투라","Ist die Temperatur angenehm?","이스트 디 템페라투어 안게네엠","La température vous convient ?","라 탕페라튀르 부 콩비앵"],
+["케어 중","불편하시면 말씀해 주세요","Please tell me if anything feels uncomfortable.","플리즈 텔 미 이프 애니씽 필즈 언컴퍼터블","Dígame si algo le incomoda.","디가메 시 알고 레 잉코모다","Sagen Sie mir bitte, wenn etwas unangenehm ist.","자겐 지 미어 비테 벤 에트바스 운안게네엠 이스트","Dites-moi si quelque chose vous gêne.","디트무아 시 켈크 쇼즈 부 젠"],
+["케어 중","눈을 감아 주세요","Please close your eyes.","플리즈 클로즈 유어 아이즈","Cierre los ojos, por favor.","시에레 로스 오호스 포르 파보르","Bitte schließen Sie die Augen.","비테 슐리센 지 디 아우겐","Fermez les yeux, s'il vous plaît.","페르메 레 지외 실 부 플레"],
+["케어 중","마스크를 올려 드릴게요","I'm going to apply a mask now.","아임 고잉 투 어플라이 어 마스크 나우","Ahora le voy a poner una mascarilla.","아오라 레 보이 아 포네르 우나 마스카리야","Jetzt trage ich eine Maske auf.","예츠트 트라게 이히 아이네 마스케 아우프","Je vais vous appliquer un masque.","쥬 베 부 자플리케 앙 마스크"],
+["케어 중","편안히 쉬세요","Please relax.","플리즈 릴랙스","Relájese, por favor.","렐라헤세 포르 파보르","Bitte entspannen Sie sich.","비테 엔트슈파넨 지 지히","Détendez-vous, s'il vous plaît.","데탕데부 실 부 플레"],
+["케어 중","돌아누워 주세요","Please turn over.","플리즈 턴 오버","Por favor, dese la vuelta.","포르 파보르 데세 라 부엘타","Bitte drehen Sie sich um.","비테 드레엔 지 지히 움","Veuillez vous retourner.","뵈이예 부 르투르네"],
+["마무리","케어가 모두 끝났습니다","We're all done.","위아 올 던","Hemos terminado.","에모스 테르미나도","Wir sind fertig.","비어 진트 페르티히","Nous avons terminé.","누 자봉 테르미네"],
+["마무리","천천히 일어나 앉으세요","Please sit up slowly.","플리즈 싯 업 슬로울리","Incorpórese despacio, por favor.","인코르포레세 데스파시오 포르 파보르","Setzen Sie sich bitte langsam auf.","젯첸 지 지히 비테 랑잠 아우프","Redressez-vous doucement.","르드레세부 두스망"],
+["마무리","피부는 어떠세요?","How does your skin feel?","하우 더즈 유어 스킨 필","¿Cómo siente la piel?","코모 시엔테 라 피엘","Wie fühlt sich Ihre Haut an?","비 퓔트 지히 이레 하우트 안","Comment sentez-vous votre peau ?","코망 상테부 보트르 포"],
+["마무리","물을 드세요","Please drink some water.","플리즈 드링크 섬 워터","Beba un poco de agua, por favor.","베바 운 포코 데 아구아 포르 파보르","Bitte trinken Sie etwas Wasser.","비테 트링켄 지 에트바스 바서","Buvez un peu d'eau, s'il vous plaît.","뷔베 앙 푀 도 실 부 플레"],
+["마무리","피부가 조금 붉어질 수 있지만 곧 가라앉아요","Your skin may look a little red, but it will calm down soon.","유어 스킨 메이 룩 어 리틀 레드 벗 잇 윌 캄 다운 순","Su piel puede estar un poco roja, pero se calmará pronto.","수 피엘 푸에데 에스타르 운 포코 로하 페로 세 칼마라 프론토","Ihre Haut kann etwas gerötet sein, beruhigt sich aber bald.","이레 하우트 칸 에트바스 게뢰테트 자인 아버 베루이기트 지히 아버 발트","Votre peau peut être un peu rouge, mais elle va vite se calmer.","보트르 포 푀 에트르 앵 푀 루주 메 엘 바 비트 스 칼메"],
+["마무리","매일 선크림을 발라 주세요","Please use sunscreen every day.","플리즈 유즈 선스크린 에브리 데이","Use protector solar todos los días.","우세 프로텍토르 솔라르 토도스 로스 디아스","Bitte verwenden Sie täglich Sonnencreme.","비테 페어벤덴 지 태글리히 존넨크렘","Utilisez de la crème solaire tous les jours.","위틸리제 드 라 크렘 솔레르 투 레 주르"],
+["마무리","홈케어 루틴을 이메일로 보내 드릴게요","I'll email you your home-care routine.","아일 이메일 유 유어 홈케어 루틴","Le enviaré su rutina de cuidado por correo.","레 엔비아레 수 루티나 데 쿠이다도 포르 코레오","Ich schicke Ihnen Ihre Pflegeroutine per E-Mail.","이히 쉬케 이넨 이레 플레게루티네 페어 이메일","Je vous enverrai votre routine par e-mail.","쥬 부 장브레 보트르 루틴 파르 이메일"],
+["마무리","결제는 케어 후에 하시면 됩니다","You can pay after your treatment.","유 캔 페이 애프터 유어 트리트먼트","Puede pagar después del tratamiento.","푸에데 파가르 데스푸에스 델 트라타미엔토","Sie können nach der Behandlung bezahlen.","지 쾨넨 나흐 데어 베한들룽 베찰렌","Vous pouvez payer après le soin.","부 푸베 페이에 아프레 르 수앙"],
+["마무리","카드와 애플페이 모두 가능합니다","We accept cards and Apple Pay.","위 억셉트 카즈 앤 애플 페이","Aceptamos tarjetas y Apple Pay.","아셉타모스 타르헤타스 이 애플 페이","Wir akzeptieren Karten und Apple Pay.","비어 악젭티렌 카르텐 운트 애플 페이","Nous acceptons les cartes et Apple Pay.","누 작셉통 레 카르트 에 애플 페이"],
+["마무리","방문해 주셔서 감사합니다","Thank you so much for visiting us.","땡큐 쏘 머치 포 비지팅 어스","Muchas gracias por su visita.","무차스 그라시아스 포르 수 비시타","Vielen Dank für Ihren Besuch.","필렌 당크 퓌어 이렌 베주흐","Merci beaucoup de votre visite.","메르시 보쿠 드 보트르 비지트"],
+["마무리","좋은 하루 보내세요, 또 뵐게요","Have a lovely day. See you again!","해브 어 러블리 데이 씨 유 어게인","¡Que tenga un lindo día! Hasta pronto.","케 텡가 운 린도 디아 아스타 프론토","Haben Sie einen schönen Tag! Bis bald.","하벤 지 아이넨 쇠넨 탁 비스 발트","Bonne journée ! À bientôt.","본 주르네 아 비앵토"]
+];
+// [카테고리, 한국어, 네덜란드어, 발음, 헝가리어, 발음]
+var ROWS2 = [
+["인사","안녕하세요","Hallo!","할로","Szia!","씨아"],
+["인사","좋은 아침이에요","Goedemorgen!","후더모르헌","Jó reggelt kívánok!","요 레겔트 키바노크"],
+["인사","좋은 오후예요","Goedemiddag!","후더미닥","Jó napot kívánok!","요 나포트 키바노크"],
+["인사","환영합니다","Welkom!","벨콤","Üdvözöljük!","위드뵈죌뤽"],
+["인사","감사합니다","Dank u wel.","당크 위 벨","Köszönöm szépen.","쾨쇠뇜 세펜"],
+["인사","천만에요","Graag gedaan.","흐라흐 흐단","Szívesen.","씨베셴"],
+["인사","안녕히 가세요","Tot ziens!","톳 진스","Viszontlátásra!","비손틀라타슈러"],
+["인사","좋은 하루 보내세요","Fijne dag!","페이너 닥","Szép napot!","셉 나포트"]
+];
+var INT = [0,1,3,7,14,30];
+var DECKS = {
+  en:{label:"영어",sp:"en-US",cards:[]}, es:{label:"스페인어",sp:"es-ES",cards:[]},
+  de:{label:"독일어",sp:"de-DE",cards:[]}, fr:{label:"프랑스어",sp:"fr-FR",cards:[]},
+  nl:{label:"네덜란드어",sp:"nl-NL",cards:[]}, hu:{label:"헝가리어",sp:"hu-HU",cards:[]}
+};
+(function(){
+  var main=["en","es","de","fr"];
+  ROWS.forEach(function(r){ main.forEach(function(l,i){ var d=DECKS[l]; d.cards.push({id:l+":"+d.cards.length,cat:r[0],ko:r[1],t:r[2+i*2],p:r[3+i*2]}); }); });
+  ["nl","hu"].forEach(function(l,i){ ROWS2.forEach(function(r){ var d=DECKS[l]; d.cards.push({id:l+":"+d.cards.length,cat:r[0],ko:r[1],t:r[2+i*2],p:r[3+i*2]}); }); });
+})();
+
+var KEY="laurel-study-v1", S={};
+try{ S=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ S={}; }
+S=Object.assign({cards:{},nt:{d:"",n:{}},streak:{last:"",n:0},perDay:5,lang:"en",auto:true},S);
+if(!S.nt||typeof S.nt.n!=="object") S.nt={d:"",n:{}};
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function dkey(off){ var d=new Date(); d.setDate(d.getDate()+(off||0)); var m=d.getMonth()+1, dd=d.getDate(); return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(dd<10?"0":"")+dd; }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function el(id){ return document.getElementById(id); }
+
+// 번역기와 같은 음성 선택 로직(findBestVoice, availableVoices)을 그대로 사용
+function say(text,lang,retry){
+  var synth=null;
+  try{ synth=window.speechSynthesis; }catch(e){}
+  if(!synth||typeof synth.speak!=="function"){ showToast("이 브라우저는 음성 출력을 지원하지 않습니다"); return; }
+  if(availableVoices.length===0){
+    try{ availableVoices=synth.getVoices()||[]; }catch(e){ availableVoices=[]; }
+    if(availableVoices.length===0&&!retry){ setTimeout(function(){ say(text,lang,true); },250); return; }
+  }
+  var v=findBestVoice(lang);
+  try{ synth.cancel(); }catch(e){}
+  var u=new SpeechSynthesisUtterance(text);
+  if(v){ u.voice=v; u.lang=v.lang; } else { u.lang=lang; }
+  u.rate=0.92; u.pitch=1.0; u.volume=1.0;
+  u.onerror=function(e){
+    var m=e.error||"unknown";
+    if(m==="language-unavailable"||m==="voice-unavailable") showToast(DECKS[S.lang].label+" 음성이 기기에 설치되지 않았습니다");
+    else if(m==="not-allowed") showToast("음성 권한이 차단되어 있습니다");
+    else showToast("음성 출력 실패: "+m);
+  };
+  setTimeout(function(){ try{ synth.speak(u); }catch(err){ showToast("음성 재생 실패"); } },50);
+}
+
+var view="study", sess=null, qz=null, hideList=true;
+
+function counts(lang){
+  var today=dkey(), due=0, neu=0, learned=0, cs=DECKS[lang].cards;
+  cs.forEach(function(c){ var st=S.cards[c.id]; if(!st) neu++; else { if(st.due<=today) due++; if(st.b>=3) learned++; } });
+  var used=(S.nt.d===today)?(S.nt.n[lang]||0):0, left=Math.max(0,S.perDay-used);
+  return {due:due,neu:neu,newAvail:Math.min(neu,left),learned:learned,total:cs.length};
+}
+function spk(){ return '<button class="st-spk" data-act="speak">듣기</button>'; }
+
+function renderHead(){
+  var box=el("stLangs"); box.innerHTML="";
+  Object.keys(DECKS).forEach(function(k){
+    var c=counts(k), b=document.createElement("button");
+    b.className="st-pill"+(S.lang===k?" active":""); b.dataset.lang=k;
+    b.innerHTML=esc(DECKS[k].label)+"<small>"+c.learned+"/"+c.total+"</small>"; box.appendChild(b);
+  });
+  document.querySelectorAll("#stTabs .st-tab").forEach(function(t){ t.classList.toggle("active",t.dataset.v===view); });
+  var st=S.streak; el("stStreak").textContent=(st.last===dkey()||st.last===dkey(-1))?st.n:0;
+}
+
+function renderStudy(){
+  var main=el("stMain"), d=DECKS[S.lang], c=counts(S.lang);
+  if(sess&&sess.queue.length===0){
+    main.innerHTML='<div class="st-cat">오늘 학습 끝</div><div class="st-big">'+sess.done+'장</div><div class="st-ko">'+esc(d.label)+' 카드를 외웠어요.</div>'+
+      '<div class="st-btns"><button class="st-btn" data-act="home">처음으로</button><button class="st-btn soft" data-act="tab-quiz">퀴즈 풀기</button></div>';
+    return;
+  }
+  if(sess){
+    var cur=sess.queue[0], pct=Math.round(100*sess.done/Math.max(1,sess.n));
+    var h='<div class="st-prog"><i style="width:'+pct+'%"></i></div><div class="st-cat">'+esc(cur.cat)+' · 남은 '+sess.queue.length+'장</div><div class="st-ko">'+esc(cur.ko)+'</div>';
+    if(!sess.reveal){
+      h+='<button class="st-btn" data-act="reveal">정답 보기</button><div class="st-note">먼저 외국어로 소리 내어 말해 본 뒤 눌러 보세요.</div>';
+    }else{
+      h+='<div class="st-ans"><div class="st-fx">'+esc(cur.t)+'</div><div class="st-pr">'+esc(cur.p)+'</div>'+spk()+'</div>'+
+         '<div class="st-btns"><button class="st-btn warn" data-act="again">다시</button><button class="st-btn" data-act="good">외웠어요</button></div>';
+    }
+    main.innerHTML=h; return;
+  }
+  var total=c.due+c.newAvail;
+  main.innerHTML=
+    '<div class="st-stats"><div class="st-stat"><b>'+c.newAvail+'</b><span>오늘 새 카드</span></div><div class="st-stat"><b>'+c.due+'</b><span>복습할 카드</span></div><div class="st-stat"><b>'+c.learned+'</b><span>외운 카드</span></div></div>'+
+    '<button class="st-btn" data-act="start"'+(total?"":" disabled")+'>'+(total?esc(d.label)+" 오늘 학습 시작 ("+total+"장)":"오늘 분량을 모두 마쳤어요")+'</button>'+
+    '<label class="st-sw">하루 새 카드 <select id="stPer"><option>3</option><option>5</option><option>8</option><option>10</option></select>장</label>'+
+    '<label class="st-sw"><input type="checkbox" id="stAuto"'+(S.auto?" checked":"")+'> 정답을 보면 음성 자동 재생</label>'+
+    '<div class="st-note">"외웠어요"를 누른 카드는 1일, 3일, 7일, 14일, 30일 뒤에 다시 나옵니다. "다시"를 누르면 오늘 안에 한 번 더 나옵니다.</div>';
+  el("stPer").value=String(S.perDay);
+}
+
+function startSession(){
+  var today=dkey(), cs=DECKS[S.lang].cards, due=[], neu=[];
+  cs.forEach(function(c){ var st=S.cards[c.id]; if(!st) neu.push(c); else if(st.due<=today) due.push(c); });
+  var used=(S.nt.d===today)?(S.nt.n[S.lang]||0):0, left=Math.max(0,S.perDay-used);
+  var q=shuffle(due).concat(neu.slice(0,left));
+  sess={queue:q,n:q.length,done:0,reveal:false};
+}
+function rate(good){
+  var today=dkey(), c=sess.queue.shift(), st=S.cards[c.id];
+  if(!st){ if(S.nt.d!==today) S.nt={d:today,n:{}}; S.nt.n[S.lang]=(S.nt.n[S.lang]||0)+1; st={b:0,due:today}; }
+  if(good){ st.b=Math.min(st.b+1,5); st.due=dkey(INT[st.b]); sess.done++; }
+  else { st.b=0; st.due=today; sess.queue.push(c); }
+  S.cards[c.id]=st;
+  if(good){ var s=S.streak; if(s.last!==today){ s.n=(s.last===dkey(-1))?s.n+1:1; s.last=today; } }
+  sess.reveal=false; save();
+}
+
+function startQuiz(){
+  var cs=DECKS[S.lang].cards, qs=shuffle(cs).slice(0,10).map(function(c){
+    var others=shuffle(cs.filter(function(x){return x.id!==c.id;})).slice(0,3);
+    return {c:c,opts:shuffle(others.concat([c]))};
+  });
+  qz={qs:qs,i:0,score:0,pick:null};
+}
+function renderQuiz(){
+  var main=el("stMain"), d=DECKS[S.lang];
+  if(!qz){
+    main.innerHTML='<div class="st-cat">퀴즈</div><div class="st-ko">한국어를 보고 알맞은 '+esc(d.label)+' 문장을 고르세요.</div><button class="st-btn" data-act="qstart">'+Math.min(10,d.cards.length)+'문제 시작</button>';
+    return;
+  }
+  if(qz.i>=qz.qs.length){
+    main.innerHTML='<div class="st-cat">결과</div><div class="st-big">'+qz.score+' / '+qz.qs.length+'</div><div class="st-btns"><button class="st-btn" data-act="qstart">다시 풀기</button><button class="st-btn soft" data-act="qend">닫기</button></div>';
+    return;
+  }
+  var q=qz.qs[qz.i], h='<div class="st-prog"><i style="width:'+Math.round(100*qz.i/qz.qs.length)+'%"></i></div><div class="st-cat">'+(qz.i+1)+' / '+qz.qs.length+'</div><div class="st-ko">'+esc(q.c.ko)+'</div><div class="st-opts">';
+  q.opts.forEach(function(o,i){
+    var cls="st-opt"; if(qz.pick!==null){ if(o.id===q.c.id) cls+=" right"; else if(i===qz.pick) cls+=" wrong"; }
+    h+='<button class="'+cls+'" data-act="pick" data-i="'+i+'"'+(qz.pick!==null?" disabled":"")+'>'+esc(o.t)+'</button>';
+  });
+  h+='</div>';
+  if(qz.pick!==null){ h+='<div class="st-pr">'+esc(q.c.p)+'</div>'+spk()+'<button class="st-btn" data-act="qnext">'+(qz.i+1>=qz.qs.length?"결과 보기":"다음")+'</button>'; }
+  main.innerHTML=h;
+}
+
+function renderList(){
+  var d=DECKS[S.lang], cats=[], h='<label class="st-sw"><input type="checkbox" id="stHide"'+(hideList?" checked":"")+'> 외국어 가리기 (줄을 누르면 보이고 소리가 나요)</label>';
+  d.cards.forEach(function(c){ if(cats.indexOf(c.cat)<0) cats.push(c.cat); });
+  cats.forEach(function(cat){
+    h+='<div class="st-cat">'+esc(cat)+'</div>';
+    d.cards.forEach(function(c,idx){
+      if(c.cat!==cat) return;
+      var st=S.cards[c.id], mark=(st&&st.b>=3)?'<span class="st-chk">외움</span>':"";
+      h+='<div class="st-item'+(hideList?" st-cover":"")+'" data-act="row" data-i="'+idx+'"><span class="k">'+esc(c.ko)+mark+'</span><span class="f">'+esc(c.t)+'</span><span class="p">'+esc(c.p)+'</span></div>';
+    });
+  });
+  el("stMain").innerHTML=h;
+}
+
+function render(){
+  renderHead();
+  if(view==="study") renderStudy(); else if(view==="quiz") renderQuiz(); else renderList();
+}
+window.studyRender=render;
+
+var root=el("viewStudy");
+root.addEventListener("click",function(e){
+  var t=e.target.closest("[data-lang],[data-v],[data-act]"); if(!t) return;
+  if(t.dataset.lang){ S.lang=t.dataset.lang; sess=null; qz=null; save(); render(); return; }
+  if(t.dataset.v){ view=t.dataset.v; render(); return; }
+  var a=t.dataset.act, d=DECKS[S.lang];
+  if(a==="start"){ startSession(); }
+  else if(a==="reveal"){ sess.reveal=true; if(S.auto) say(sess.queue[0].t,d.sp); }
+  else if(a==="good"){ rate(true); }
+  else if(a==="again"){ rate(false); }
+  else if(a==="home"){ sess=null; }
+  else if(a==="tab-quiz"){ sess=null; view="quiz"; }
+  else if(a==="speak"){
+    var txt=null;
+    if(view==="study"&&sess&&sess.queue[0]) txt=sess.queue[0].t;
+    if(view==="quiz"&&qz&&qz.qs[qz.i]) txt=qz.qs[qz.i].c.t;
+    if(txt) say(txt,d.sp);
+    return;
+  }
+  else if(a==="qstart"){ startQuiz(); }
+  else if(a==="qend"){ qz=null; }
+  else if(a==="pick"){ var q=qz.qs[qz.i]; qz.pick=+t.dataset.i; if(q.opts[qz.pick].id===q.c.id) qz.score++; if(S.auto) say(q.c.t,d.sp); }
+  else if(a==="qnext"){ qz.i++; qz.pick=null; }
+  else if(a==="row"){
+    t.classList.toggle("show");
+    if(t.classList.contains("show")) say(d.cards[+t.dataset.i].t,d.sp);
+    return;
+  }
+  render();
+});
+root.addEventListener("change",function(e){
+  if(e.target.id==="stPer"){ S.perDay=+e.target.value; save(); render(); }
+  if(e.target.id==="stAuto"){ S.auto=e.target.checked; save(); }
+  if(e.target.id==="stHide"){ hideList=e.target.checked; render(); }
+});
+render();
+
+})();
 
 // ============================================
 // START
